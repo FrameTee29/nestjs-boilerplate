@@ -20,7 +20,9 @@
     "esModuleInterop": true, // allows default imports from modules with no default export.
     "paths": {
       "@/*": ["src/app/*"],
-      "@helpers/*": ["src/app/shared/helpers/*"],
+      "@helpers/*": ["src/shared/helpers/*"],
+      "@commons/*": ["src/shared/commons/*"],
+      "@services/*": ["src/shared/services/*"],
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"]
     }

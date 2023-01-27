@@ -1,3 +1,5 @@
+import { APP_FILTER } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import * as redisStore from 'cache-manager-ioredis';
 import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -5,7 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppService } from 'src/app.service';
 import configuration from '@config/configuration';
 import { AppController } from 'src/app.controller';
-import { ScheduleModule } from '@nestjs/schedule';
+import { ResponseExceptionFilter } from '@commons/exceptions/response.exception';
 
 @Module({
   imports: [
@@ -30,6 +32,12 @@ import { ScheduleModule } from '@nestjs/schedule';
     ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: ResponseExceptionFilter,
+    },
+    AppService,
+  ],
 })
 export class AppModule {}
