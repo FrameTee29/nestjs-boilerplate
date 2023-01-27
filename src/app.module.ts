@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppService } from 'src/app.service';
 import configuration from '@config/configuration';
 import { AppController } from 'src/app.controller';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AppController } from 'src/app.controller';
       }),
       inject: [ConfigService],
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
