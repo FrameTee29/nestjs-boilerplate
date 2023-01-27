@@ -31,14 +31,13 @@ export class ResponseExceptionFilter implements ExceptionFilter {
         : exception.message || 'Internal server error';
 
     const errorBody = {
-      ok: false,
+      success: false,
       error: {
         statusCode,
-        message,
-        detail: message,
         timestamp: new Date().toISOString(),
         path: request.url,
         method: request.method,
+        detail: message,
         errorName: exception?.name,
       },
     };
