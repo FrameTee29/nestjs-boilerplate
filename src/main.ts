@@ -1,18 +1,18 @@
 import helmet from 'helmet';
-import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 
 import { AppModule } from 'src/app.module';
 import { NestConfig } from '@config/configuration.interface';
-// import { ResponseExceptionFilter } from '@commons/exceptions/response.exception';
+import { ResponseExceptionFilter } from '@commons/exceptions/response.exception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  // const httpAdapter = app.get(HttpAdapterHost);
+  const httpAdapter = app.get(HttpAdapterHost);
   const nestConfig = configService.get<NestConfig>('nest');
 
   app.use(helmet());
@@ -29,7 +29,7 @@ async function bootstrap() {
     }),
   );
 
-  // app.useGlobalFilters(new ResponseExceptionFilter(httpAdapter, configService));
+  app.useGlobalFilters(new ResponseExceptionFilter(httpAdapter, configService));
 
   // TODO: Exception
 
